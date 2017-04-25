@@ -1,0 +1,14 @@
+{
+    "name": "A6lib",
+    "keywords": [
+      "A20", "GSM", "mobile"
+    ],
+    "description": "An ESP8266/Arduino library for communicating with the A20 GSM module.",
+    "repository":
+    {
+        "type": "git",
+        "url": "https://github.com/iesfausti/A20lib"
+    },
+    "frameworks": "arduino",
+    "platforms": "*"
+}

@@ -1,0 +1,34 @@
+#######################################
+# A20 GSM communication module
+# (esp8266)
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+A20lib                  KEYWORD1
+callInfo               KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin                  KEYWORD2
+powerCycle             KEYWORD2
+
+dial                   KEYWORD2
+redial                 KEYWORD2
+hangUp                 KEYWORD2
+checkCallStatus        KEYWORD2
+getSignalStrength      KEYWORD2
+
+sendSMS                KEYWORD2
+
+setVol                 KEYWORD2
+
+A20conn                KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
