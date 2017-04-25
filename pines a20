@@ -1,0 +1,53 @@
+Ahora lo entiendo.
+El DIP switch está pensado para conectar/desconectar internamente
+(siempre puedo puentear con cables los Pines.)
+la UART del telefono y los GPIO13 y 15 de la ESP
+por software SI lo conecto, GPIO13 sería el RX enfrentado a UART_TX
+y GPIO15  sería el TX enfrentado a UART_RX.
+Y WIFI_RX y WIFI_TX?
+Solo salen via Pin, y para conectarlos a la UART del tel. tengo que usar cables.
+
+Y usar los Pines 13,15 aun en Arduino con un Serial.swap() no funciona bien...
+la solucion en el codigo /opt/ESP8266/a20/telenetserial.ino, con los cables de TX/RX de la 
+esp8265 directos a la uart del GPRS y con una espera, un flush, etc...
+ 
+   
+
+wf_xx son la patitas del chip
+uart_xX son las patitas del chip
+
+wifi_xx son los pines de la placa
+u_xx son los pines de la placa
+
+IZQ: chip DCHA: pines
+ON conectado
+
+conf.foto
+___________________
+Puedo ver la salida de la uart del telefono.
+Puedo usar los pines 13,15 de la ESP 
+
+6 uart_rxd ON u_rxd
+5 uart_rxd OFF wifi_io15
+4 uart_txd ON  u_txd
+3 uart_txd OFF wifi_io13
+2 wf_io15  ON  wifi_io15 
+1 wf_io13  ON  wifi_io13
+
+conf.ALTERNATIVA
+___________________
+Programao la ESP para un soft2 serial y 
+
+6 uart_rxd OFF u_rxd
+5 uart_rxd ON  wifi_io15
+4 uart_txd OFF u_txd
+3 uart_txd ON  wifi_io13
+2 wf_io15  OFF wifi_io15 
+1 wf_io13  OFF wifi_io13
+
+
+La cond. alternativa a 9600 acaba funcionando?
+ordenes 'ATOI\r\n' bloquean!
+A explorar
+https://github.com/skorokithakis/A6lib
+
