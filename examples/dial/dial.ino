@@ -1,6 +1,3 @@
-#include <SoftwareSerial.h>
-SoftwareSerial swSer(15, 13, false, 256);
-
 #include <A20lib.h>
 
 
@@ -8,9 +5,7 @@ SoftwareSerial swSer(15, 13, false, 256);
 A20lib A20l();
 
 void setup() {
-    swSer.begin(9600);
     delay(1000);
-
     A20l.blockUntilReady(9600);
 }
 
@@ -18,8 +13,8 @@ void loop() {
     callInfo cinfo = A20l.checkCallStatus();
 
     int sigStrength = A20l.getSignalStrength();
-    swSer.print("Signal strength percentage: ");
-    swSer.println(sigStrength);
+    log("Signal strength percentage: ");
+    logln(sigStrength);
 
     delay(5000);
 
@@ -31,7 +26,7 @@ void loop() {
         }
         delay(1000);
     } else {
-        swSer.println("No number yet.");
+        logln("No number yet.");
         delay(1000);
     }
 }

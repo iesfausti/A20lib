@@ -7,13 +7,8 @@
 //
 
 A20lib::A20lib(int transmitPin, int receivePin) {
-    A20conn = new Serial();
-    A20conn->setTimeout(100);
-}
-
-
-A20lib::~A20lib() {
-    delete A20conn;
+    Serial.begin(115200);
+    Serial.setTimeout(100);
 }
 
 
@@ -39,7 +34,7 @@ byte A20lib::blockUntilReady(long baudRate) {
 // default (autodetected) to the desired speed.
 byte A20lib::begin(long baudRate) {
 
-    A20conn->flush();
+    Serial.flush();
 
     if (A20_OK != setRate(baudRate)) {
         return A20_NOTOK;
@@ -76,34 +71,6 @@ byte A20lib::begin(long baudRate) {
 
     return A20_OK;
 }
-
-
-// Reboot the module by setting the specified pin HIGH, then LOW. The pin should
-// be connected to a P-MOSFET, not the A20's POWER pin.
-void A20lib::powerCycle(int pin) {
-    logln("Power-cycling module...");
-
-    powerOff(pin);
-
-    delay(2000);
-
-    powerOn(pin);
-
-    // Give the module some time to settle.
-    logln("Done, waiting for the module to initialize...");
-    delay(20000);
-    logln("Done.");
-
-    A20conn->flush();
-}
-
-
-// Turn the modem power completely off.
-void A20lib::powerOff(int pin) {
-    pinMode(pin, OUTPUT);
-    digitalWrite(pin, LOW);
-}
-
 
 // Turn the modem power on.
 void A20lib::powerOn(int pin) {
@@ -211,9 +178,9 @@ byte A20lib::sendSMS(String number, String text) {
     sprintf(buffer, "AT+CMGS=\"%s\"", number.c_str());
     A20command(buffer, ">", "yy", A20_CMD_TIMEOUT, 2, NULL);
     delay(100);
-    A20conn->println(text.c_str());
-    A20conn->println(ctrlZ);
-    A20conn->println();
+    Serial.println(text.c_str());
+    Serial.println(ctrlZ);
+    Serial.println();
 
     return A20_OK;
 }
@@ -322,7 +289,7 @@ long A20lib::detectRate() {
     for (int i = 0; i < countof(rates); i++) {
         rate = rates[i];
 
-        A20conn->begin(rate);
+        Serial.begin(rate);
         log("Trying rate ");
         log(rate);
         logln("...");
@@ -360,7 +327,7 @@ char A20lib::setRate(long baudRate) {
 
     logln("Switching to the new rate...");
     // Begin the connection again at the requested rate.
-    A20conn->begin(baudRate);
+    Serial.begin(baudRate);
     logln("Rate set.");
 
     return A20_OK;
@@ -370,8 +337,8 @@ char A20lib::setRate(long baudRate) {
 // Read some data from the A20 in a non-blocking manner.
 String A20lib::read() {
     String reply = "";
-    if (A20conn->available()) {
-        reply = A20conn->readString();
+    if (Serial.available()) {
+        reply = Serial.readString();
     }
 
     // XXX: Replace NULs with \xff so we can match on them.
@@ -390,14 +357,14 @@ byte A20lib::A20command(const char *command, const char *resp1, const char *resp
     byte count = 0;
 
     // Get rid of any buffered output.
-    A20conn->flush();
+    Serial.flush();
 
     while (count < repetitions && returnValue != A20_OK) {
         log("Issuing command: ");
         logln(command);
 
-        A20conn->write(command);
-        A20conn->write('\r');
+        Serial.write(command);
+        Serial.write('\r');
 
         if (A20waitFor(resp1, resp2, timeout, response) == A20_OK) {
             returnValue = A20_OK;

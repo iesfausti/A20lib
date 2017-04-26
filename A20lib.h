@@ -5,8 +5,10 @@
 #include "SoftwareSerial.h"
 
 #ifdef DEBUG
-#define log(msg) Serial.print(msg)
-#define logln(msg) Serial.println(msg)
+SoftwareSerial swSer(15, 13, false, 256);
+swSer.begin(9600);
+#define log(msg) swSer.print(msg)
+#define logln(msg) swSer.println(msg)
 #else
 #define log(msg)
 #define logln(msg)
@@ -70,14 +72,10 @@ struct callInfo {
 class A20lib {
 public:
     A20lib(int transmitPin, int receivePin);
-    ~A20lib();
 
     byte begin(long baudRate);
     byte blockUntilReady(long baudRate);
 
-    void powerCycle(int pin);
-    void powerOn(int pin);
-    void powerOff(int pin);
 
     void dial(String number);
     void redial();

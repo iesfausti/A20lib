@@ -1,6 +1,3 @@
-#include <SoftwareSerial.h>
-SoftwareSerial swSer(15, 13, false, 256);
-
 #include <A20lib.h>
 
 
@@ -12,10 +9,7 @@ int unreadSMSNum = 0;
 SMSmessage sms;
 
 void setup() {
-    swSer.begin(9600);
-    delay(1000);
-
-    A20l.blockUntilReady(9600);
+     A20l.blockUntilReady(9600);
 }
 
 
@@ -36,9 +30,9 @@ void loop() {
             swSer.println(unreadSMSLocs[i], DEC);
 
             sms = A20l.readSMS(unreadSMSLocs[i]);
-            swSer.println(sms.number);
-            swSer.println(sms.date);
-            swSer.println(sms.message);
+            logln(sms.number);
+            logln(sms.date);
+            logln(sms.message);
         }
         delay(1000);
     }
