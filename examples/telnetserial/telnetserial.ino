@@ -38,6 +38,8 @@ void setup() {
   server.begin();
   server.setNoDelay(true);
   delay(10000);
+  Serial.begin(115200);
+  Serial.flush();
  
 }
 
