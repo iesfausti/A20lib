@@ -73,8 +73,8 @@ class A20lib {
 public:
     A20lib();
 
-    byte begin(long baudRate);
-    byte blockUntilReady(long baudRate);
+    byte begin(long baudRate, String PinCode);
+    byte blockUntilReady(long baudRate, String PinCode);
 
 
     void dial(String number);

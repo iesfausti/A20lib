@@ -14,11 +14,11 @@ A20lib::A20lib() {
 
 
 // Block until the module is ready.
-byte A20lib::blockUntilReady(long baudRate) {
+byte A20lib::blockUntilReady(long baudRate, String PinCode) {
 
     byte response = A20_NOTOK;
     while (A20_OK != response) {
-        response = begin(baudRate);
+        response = begin(baudRate, PinCode);
         // This means the modem has failed to initialize and we need to reboot
         // it.
         if (A20_FAILURE == response) {
@@ -33,7 +33,8 @@ byte A20lib::blockUntilReady(long baudRate) {
 
 // Initialize the software serial connection and change the baud rate from the
 // default (autodetected) to the desired speed.
-byte A20lib::begin(long baudRate) {
+byte A20lib::begin(long baudRate, String PinCode) {
+    char buffer[50];
 
     Serial.flush();
 
@@ -46,6 +47,22 @@ byte A20lib::begin(long baudRate) {
 
     // Echo off.
     A20command("ATE0", "OK", "yy", A20_CMD_TIMEOUT, 2, NULL);
+    // Register phone SIM
+    if (PinCode.length() > 0)
+    {
+      logln("Registering pin code...");
+      sprintf(buffer, "AT+CPIN=%s;", PinCode.c_str());
+      A20command(buffer, "OK", "yy", A20_CMD_TIMEOUT, 2, NULL);
+    }
+
+    logln("Dialing number...");
+
+ 
+
+
+    A20command("AT+CLIP=1", "OK", "yy", A20_CMD_TIMEOUT, 2, NULL);
+    
+
 
     // Set caller ID on.
     A20command("AT+CLIP=1", "OK", "yy", A20_CMD_TIMEOUT, 2, NULL);

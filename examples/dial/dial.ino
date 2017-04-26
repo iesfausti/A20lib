@@ -6,7 +6,7 @@ A20lib A20l = A20lib();
 
 void setup() {
     delay(1000);
-    A20l.blockUntilReady(9600);
+    A20l.blockUntilReady(9600,"");
 }
 
 void loop() {

@@ -9,7 +9,7 @@ int unreadSMSNum = 0;
 SMSmessage sms;
 
 void setup() {
-     A20l.blockUntilReady(9600);
+     A20l.blockUntilReady(9600,"");
 }
 
 

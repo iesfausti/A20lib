@@ -18,7 +18,6 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-#include <A20lib.h>
 #include <ESP8266WiFi.h>
 
 
@@ -30,8 +29,6 @@ const char* password = "gratisgratis";
 WiFiServer server(23);
 WiFiClient serverClients[MAX_SRV_CLIENTS];
 
-// Instantiate the library with TxPin, RxPin.
-A20lib A20l = A20lib();
 
 void setup() {
   WiFi.begin(ssid, password);
@@ -40,10 +37,8 @@ void setup() {
   //start UART and the server
   server.begin();
   server.setNoDelay(true);
-  //Este delay NECESARIO?
-  delay(15000);
-  A20l.blockUntilReady(115200);
-
+  delay(10000);
+ 
 }
 
 void loop() {
