@@ -8,6 +8,7 @@
 
 A20lib::A20lib(int transmitPin, int receivePin) {
     Serial.begin(115200);
+    Serial.setDebugOutput(0);
     Serial.setTimeout(100);
 }
 
