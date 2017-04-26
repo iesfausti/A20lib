@@ -6,7 +6,7 @@
 // Public methods.
 //
 
-A20lib::A20lib(int transmitPin, int receivePin) {
+A20lib::A20lib() {
     Serial.begin(115200);
     Serial.setDebugOutput(0);
     Serial.setTimeout(100);
@@ -47,9 +47,6 @@ byte A20lib::begin(long baudRate) {
     // Echo off.
     A20command("ATE0", "OK", "yy", A20_CMD_TIMEOUT, 2, NULL);
 
-    // Switch audio to headset.
-    enableSpeaker(0);
-
     // Set caller ID on.
     A20command("AT+CLIP=1", "OK", "yy", A20_CMD_TIMEOUT, 2, NULL);
 
@@ -72,13 +69,6 @@ byte A20lib::begin(long baudRate) {
 
     return A20_OK;
 }
-
-// Turn the modem power on.
-void A20lib::powerOn(int pin) {
-    pinMode(pin, OUTPUT);
-    digitalWrite(pin, HIGH);
-}
-
 
 // Dial a number.
 void A20lib::dial(String number) {

@@ -31,8 +31,7 @@ WiFiServer server(23);
 WiFiClient serverClients[MAX_SRV_CLIENTS];
 
 // Instantiate the library with TxPin, RxPin.
-A20lib A20l();
-
+A20lib A20l = A20lib();
 
 void setup() {
   WiFi.begin(ssid, password);

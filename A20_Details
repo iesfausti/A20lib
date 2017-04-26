@@ -1,0 +1,50 @@
+A20 Module Details
+----------------------------------------
+
+Part of the docs are in 
+http://www.electrodragon.com/w/GSM_GPRS_A6_Module#A20_Module
+
+This module was created to use de ESP8285 MCU to control or not the GPRS Module,
+so there is a Switches that let connect internally GPIO13 and GPIO15 with the
+UART_RX and UART_TX,
+GPIO13 (SoftwareSerial_RX) address UART_TX
+GPIO15 (SoftwareSerialTX) address  UART_RX.
+But viua software I cannot make it work, 115200 bauds it's too much?
+So I direct connect WIFI_RX and WIFI_TX to UART.
+
+I already tried use 13,15 pins in Arduino with Serial.swap() but...
+
+wf_xx are chip pins
+uart_xx are chip pins
+
+wifi_xx are board pins
+u_xx son are board pins
+
+LEFT.: chip RIGHT: pins
+ON connected.
+
+picture  conf.(http://www.electrodragon.com/w/File:A20_Breakout.jpg)
+___________________
+
+Used configuration:
+
+6 uart_rxd ON u_rxd
+5 uart_rxd OFF wifi_io15
+4 uart_txd ON  u_txd
+3 uart_txd OFF wifi_io13
+2 wf_io15  ON  wifi_io15 
+1 wf_io13  ON  wifi_io13
+
+
+Desired configuration (not working)
+___________________
+ESP8285 and SotfwareSerial (GPIO13 and 15)
+
+6 uart_rxd OFF u_rxd
+5 uart_rxd ON  wifi_io15
+4 uart_txd OFF u_txd
+3 uart_txd ON  wifi_io13
+2 wf_io15  OFF wifi_io15 
+1 wf_io13  OFF wifi_io13
+
+

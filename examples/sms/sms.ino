@@ -2,7 +2,7 @@
 
 
 // Instantiate the library with TxPin, RxPin.
-A20lib A20l();
+A20lib A20l = A20lib();
 
 int unreadSMSLocs[30] = {0};
 int unreadSMSNum = 0;
@@ -26,8 +26,8 @@ void loop() {
         unreadSMSNum = A20l.getUnreadSMSLocs(unreadSMSLocs, 30);
 
         for (int i = 0; i < unreadSMSNum; i++) {
-            swSer.print("New message at index: ");
-            swSer.println(unreadSMSLocs[i], DEC);
+            logln("New message at index: ");
+            logln(unreadSMSLocs[i]);
 
             sms = A20l.readSMS(unreadSMSLocs[i]);
             logln(sms.number);

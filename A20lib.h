@@ -71,7 +71,7 @@ struct callInfo {
 
 class A20lib {
 public:
-    A20lib(int transmitPin, int receivePin);
+    A20lib();
 
     byte begin(long baudRate);
     byte blockUntilReady(long baudRate);
@@ -92,9 +92,6 @@ public:
     byte deleteSMS(int index);
     byte setSMScharset(String charset);
 
-
-
-    Serial *A20conn;
 private:
     String read();
     byte A20command(const char *command, const char *resp1, const char *resp2, int timeout, int repetitions, String *response);

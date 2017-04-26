@@ -2,7 +2,7 @@
 
 
 // Instantiate the library with TxPin, RxPin.
-A20lib A20l();
+A20lib A20l = A20lib();
 
 void setup() {
     delay(1000);
